@@ -27,18 +27,19 @@ const gallery = new SimpleLightbox('.gallery a', {
 
 function onSubmit(e) {
   e.preventDefault();
-  document.addEventListener('scroll', onScroll);
 
   const formElem = e.target.elements;
   queryParams = formElem.searchQuery.value.trim();
 
   if (queryParams == '') {
-    Notify.warning('Please enter a request...')
+    Notify.warning('Please enter a request...');
     return;
   }
 
   removeGalleryItems();
   renderGalleryItems(queryParams, page, perPage);
+
+  document.addEventListener('scroll', onScroll);
 }
 
 async function renderGalleryItems(query, qPage, perPage) {
@@ -89,9 +90,11 @@ function onScroll(e) {
   }
 
   if (allPages < page) {
-    Notify.success("We're sorry, but you've reached the end of search results.");
+    Notify.success(
+      "We're sorry, but you've reached the end of search results."
+    );
     document.removeEventListener('scroll', onScroll);
-    return
+    return;
   }
 
   isLoading = true;
